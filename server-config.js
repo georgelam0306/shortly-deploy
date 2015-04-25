@@ -1,10 +1,20 @@
 var express = require('express');
 var partials = require('express-partials');
 var util = require('./lib/utility');
+var mongoose = require('mongoose');
 
 var handler = require('./lib/request-handler');
 
+
 var app = express();
+
+mongoose.connect('mongodb://localhost/shortlydb');
+
+var db = mongoose.connection;
+db.once('open', function()
+{
+  console.log("started connection");
+})
 
 app.configure(function() {
   app.set('views', __dirname + '/views');
